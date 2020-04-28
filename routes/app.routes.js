@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const auth = require('../modules/auth');
+const refreshToken = require('../modules/auth');
 const testController = require('../controllers/test.controller');
 const dogController = require('../controllers/dog.controller');
 const typesController = require('../controllers/types.controller');
@@ -12,9 +12,9 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.use('/test', testController);
-router.use('/dog', auth, dogController);
-router.use('/types', auth, typesController);
-router.use('/organization', auth, organizationController);
-router.use('/breeds', auth, breedsController);
+router.use('/dog', refreshToken, dogController);
+router.use('/types', refreshToken, typesController);
+router.use('/organization', refreshToken, organizationController);
+router.use('/breeds', refreshToken, breedsController);
 
 module.exports = router;

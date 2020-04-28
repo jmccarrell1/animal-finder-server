@@ -28,8 +28,10 @@ const verifyToken = (req, res) => {
   });
 };
 
-module.exports = (req, res, next) => {
+const refreshToken = (req, res, next) => {
   verifyToken(req, res, process.env.AUTH_TOKEN_TIMEOUT_MINUTES).then(() => {
     next();
   });
 };
+
+module.exports = refreshToken;
