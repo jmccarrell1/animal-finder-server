@@ -1,4 +1,5 @@
 const cache = require('node-cache');
+const logger = require('./logger');
 
 class Cache {
   constructor(stdTTL, checkperiod, useClones) {
@@ -19,8 +20,8 @@ class Cache {
         }
         return result;
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        logger.error(`cache get callback failure: ${error}`);
       });
   }
 
