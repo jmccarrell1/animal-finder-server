@@ -8,12 +8,15 @@ module.exports = {
   buildBreeds: function (body) {
     return breedsQuery(body);
   },
+  organizations: function (body) {
+    return breedsQuery(body);
+  },
 };
 
 const baseUrl = 'https://api.petfinder.com';
 
 function breedsQuery(body) {
-  const url = new URL(`/v2/${body.type}/breeds`, baseUrl);
+  const url = new URL(`/v2/types/${body.type}/breeds`, baseUrl);
   appendMeta(url, body.meta);
   return url;
 }
@@ -28,6 +31,12 @@ function animalQuery(body) {
   const url = new URL('/v2/animals', baseUrl);
   appendMeta(url, body.meta);
   appendSearch(url, body);
+  return url;
+}
+
+function organizationQuery(body) {
+  const url = new URL('/v2/organizations', baseUrl);
+  appendMeta(url, body.meta);
   return url;
 }
 

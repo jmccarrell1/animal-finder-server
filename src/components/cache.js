@@ -1,28 +1,23 @@
 const cache = require('node-cache');
-const logger = require('./logger');
+//const logger = require('./logger');
 
 class Cache {
   constructor(stdTTL, checkperiod, useClones) {
     this.cache = new cache(stdTTL, checkperiod, useClones);
   }
 
-  get(key, callback, ttl) {
+  get(key) {
     const value = this.cache.get(key);
     if (value) {
-      return Promise.resolve(value);
+      return value;
     }
+  }
 
-    return callback()
-      .then((result) => {
-        this.cache.set(key, result);
-        if (ttl) {
-          this.cache.ttl(key, ttl);
-        }
-        return result;
-      })
-      .catch((error) => {
-        logger.error(`cache get callback failure: ${error}`);
-      });
+  set(key, value, ttl) {
+    this.cache.set(key, value);
+    if (ttl) {
+      this.cache.ttl(key, ttl);
+    }
   }
 
   del(keys) {

@@ -1,14 +1,18 @@
 require('dotenv').config();
 const express = require('express');
-const routes = require('./routes/app.routes');
-const logger = require('./logger');
+const logger = require('./components/logger');
+const routes = require('./controllers/routes');
+const auth = require('./middleware/auth2');
+
+// pattern in use (some of) https://medium.com/@carlos.illobre/nodejs-express-how-to-organize-your-routes-in-very-big-applications-and-why-controllers-are-evil-e202eea497f4
 
 class App {
   constructor() {
     this.app = express();
     this.app.use(express.json());
     //this.app.use(express.urlencoded());
-    this.app.use(routes);
+    this.app.use(auth);
+    this.app.use('/api', routes);
     this.app.use((req, res, next) => {
       const error = new Error('Not found');
       error.status = 404;

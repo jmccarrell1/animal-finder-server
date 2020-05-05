@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const cache = require('../cache');
-const queryBuilder = require('../modules/query-builder');
-const logger = require('../logger');
+const cache = require('../../components/cache');
+const queryBuilder = require('../query-builder');
+const logger = require('../../components/cache');
 
 router.post('/', (req, res) => {
-  const url = queryBuilder.buildTypes(req.body);
+  const url = queryBuilder.buildAnimal(req.body);
 
   cache
     .get(url.href, () => {
@@ -27,6 +27,10 @@ router.post('/', (req, res) => {
       logger.info(`cache get exception from ${url.href}: error: ${error}`);
       res.send('Invalid request');
     });
+});
+
+router.get('/:id', (req, res) => {
+  res.send('the animal test id controller');
 });
 
 module.exports = router;
