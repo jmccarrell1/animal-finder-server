@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 let dev_db_url =
-  'mongodb+srv://jeremy:dilbert@cluster0-ziqqz.mongodb.net/test?retryWrites=true&w=majority';
+  'mongodb+srv://jeremy:dilbert@cluster0-ziqqz.mongodb.net/animal-finder?retryWrites=true&w=majority';
 
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB).then(
+mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect(mongoDB, { useNewUrlParser: true }).then(
   () => {
     console.log('Database connection established!');
   },

@@ -4,8 +4,8 @@ const axios = require('axios');
 const cache = require('../../components/cache');
 const queryBuilder = require('../query-builder');
 
-function getOrganizations(db, logger) {
-  router.post('/organizations', async (req, res, next) => {
+function getAnimals(db, logger) {
+  router.post('/animals', async (req, res, next) => {
     try {
       const url = queryBuilder.buildAnimal(req.body);
 
@@ -23,7 +23,7 @@ function getOrganizations(db, logger) {
         res.send(response.data);
       }
     } catch (error) {
-      logger.info(`post exception: ${error} body: ${req.body}`);
+      logger.error(`post exception: ${error} body: ${req.body}`);
       next(error);
     }
   });
@@ -31,4 +31,4 @@ function getOrganizations(db, logger) {
   return router;
 }
 
-module.exports = getOrganizations;
+module.exports = getAnimals;

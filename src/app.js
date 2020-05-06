@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const logger = require('./components/logger');
-const routes = require('./controllers/routes');
+const routes = require('./routes/routes');
 const auth = require('./middleware/auth2');
 
 // pattern in use (some of) https://medium.com/@carlos.illobre/nodejs-express-how-to-organize-your-routes-in-very-big-applications-and-why-controllers-are-evil-e202eea497f4

@@ -23,9 +23,16 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Refresh DB",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\index.js"
+      "program": "${workspaceFolder}/src/data/refreshDb.js",
+      "args": [
+        "dog",
+        "senior",
+        "adoptable",
+        "wa",
+        "1"
+      ]
     },
     {
       "type": "node",

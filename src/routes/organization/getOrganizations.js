@@ -4,10 +4,10 @@ const axios = require('axios');
 const cache = require('../../components/cache');
 const queryBuilder = require('../query-builder');
 
-function getBreeds(db, logger) {
-  router.post('/types/:type/breeds', async (req, res, next) => {
+function getOrganizations(db, logger) {
+  router.post('/organizations', async (req, res, next) => {
     try {
-      const url = queryBuilder.buildAnimal(req.body);
+      const url = queryBuilder.buildOrganizations(req.body);
 
       const cacheData = await cache.get(url.href);
 
@@ -23,7 +23,7 @@ function getBreeds(db, logger) {
         res.send(response.data);
       }
     } catch (error) {
-      logger.info(`post exception: ${error} body: ${req.body}`);
+      logger.error(`post exception: ${error} body: ${req.body}`);
       next(error);
     }
   });
@@ -31,4 +31,4 @@ function getBreeds(db, logger) {
   return router;
 }
 
-module.exports = getBreeds;
+module.exports = getOrganizations;

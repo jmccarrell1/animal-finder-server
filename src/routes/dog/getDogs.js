@@ -5,7 +5,7 @@ const cache = require('../../components/cache');
 const queryBuilder = require('../query-builder');
 
 function getDogs(db, logger) {
-  router.post('/dogs', async (req, res, next) => {
+  router.get('/dogs', async (req, res, next) => {
     try {
       const url = queryBuilder.buildAnimal(req.body);
 
@@ -23,7 +23,7 @@ function getDogs(db, logger) {
         res.send(response.data);
       }
     } catch (error) {
-      logger.info(`post exception: ${error} body: ${req.body}`);
+      logger.error(`post exception: ${error} body: ${req.body}`);
       next(error);
     }
   });

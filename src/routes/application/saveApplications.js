@@ -9,7 +9,7 @@ function saveApplication(db, logger) {
     try {
       res.send(200);
     } catch (error) {
-      logger.info(`post exception: ${error} body: ${req.body}`);
+      logger.error(`post exception: ${error} body: ${req.body}`);
       next(error);
     }
   });

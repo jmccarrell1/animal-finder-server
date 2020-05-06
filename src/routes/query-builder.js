@@ -8,8 +8,8 @@ module.exports = {
   buildBreeds: function (body) {
     return breedsQuery(body);
   },
-  organizations: function (body) {
-    return breedsQuery(body);
+  buildOrganizations: function (body) {
+    return organizationQuery(body);
   },
 };
 
@@ -48,6 +48,7 @@ function appendMeta(url, meta) {
 
 function appendSearch(url, body) {
   append(url, 'id', body.id);
+  append(url, 'type', body.type);
   append(url, 'size', body.size);
   append(url, 'gender', body.gender);
   append(url, 'age', body.age);
