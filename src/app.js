@@ -10,7 +10,6 @@ class App {
   constructor() {
     this.app = express();
     this.app.use(express.json());
-    //this.app.use(express.urlencoded());
     this.app.use(auth);
     this.app.use('/api', routes);
     this.app.use((req, res, next) => {

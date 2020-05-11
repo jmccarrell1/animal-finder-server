@@ -1,16 +1,13 @@
 const router = require('express').Router();
-const dbConnection = require('../components/db');
+const animalDbContext = require('../data/animalDbContext');
 const logger = require('../components/logger');
 
 router.use(function timeLog(req, res, next) {
-  console.log(`Time ${Date.now()}`);
+  logger.info(`Time ${Date.now()}`);
   next();
 });
 
-router.use(require('./dog/getDogs')(dbConnection, logger));
-router.use(require('./type/getTypes')(dbConnection, logger));
-router.use(require('./organization/getOrganizations')(dbConnection, logger));
-router.use(require('./breed/getBreeds')(dbConnection, logger));
-router.use(require('./application/saveApplications')(dbConnection, logger));
+router.use(require('./dog/getDogs')(animalDbContext, logger));
+//router.use(require('./application/saveApplications')(dbConnection, logger));
 
 module.exports = router;

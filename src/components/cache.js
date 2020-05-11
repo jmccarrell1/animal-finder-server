@@ -1,5 +1,4 @@
 const cache = require('node-cache');
-//const logger = require('./logger');
 
 class Cache {
   constructor(stdTTL, checkperiod, useClones) {

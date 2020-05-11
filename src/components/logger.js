@@ -1,72 +1,36 @@
-//const { transports } = require('winston');
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, printf } = format;
 
-const logger = (module.exports = require('winston'));
+const myFormat = printf(({ level, message, label, timestamp }) => {
+  return `${timestamp} [${label}] ${level}: ${message}`;
+});
 
-logger.format(
-  logger.format.combine(
-    logger.format.timestamp(),
-    logger.format.printf(({ level, message, timestamp }) => {
-      return `${timestamp}: ${level}: ${message}`;
-    })
-  )
-);
+const logger = createLogger({
+  format: combine(label({ label: 'cron' }), timestamp(), myFormat),
+});
 
 logger.add(
-  new logger.transports.File({
-    filename: 'animal-service.log',
+  new transports.File({
+    filename: 'animal-server.log',
     level: 'info',
     maxsize: '104857600',
     maxFiles: 5,
-    tailable: 'true',
     handleExceptions: true,
     humanReadableUnhandledException: true,
-    json: false,
+    format: format.json(),
   })
 );
 
 logger.add(
-  new logger.transports.Console({
+  new transports.Console({
     name: 'debug-console',
-    level: 'info',
+    level: 'debug',
     handleExceptions: true,
     humanReadableUnhandledException: true,
     stderrLevels: ['error'],
     exitOnErro: true,
+    format: format.combine(format.colorize(), format.simple()),
   })
 );
 
-// logger.add(logger.transports.File, {
-//   name: 'debug-file',
-//   filename: 'animal-service.log',
-//   level: 'debug',
-//   handleExceptions: true,
-//   humanReadableUnhandledException: true,
-//   exitOnError: true,
-//   json: false,
-//   maxsize: 104857600,
-//   maxFiles: 5,
-// });
-// logger.add(logger.transports.Console, {
-//   name: 'debug-console',
-//   level: 'debug',
-//   handleExceptions: true,
-//   humanReadableUnhandledException: true,
-//   exitOnError: true,
-// });
-
-// const logger = createLogger({
-//   level: 'info',
-//   format: format.combine(timestamp(), myFormat),
-//   defaultMeta: { service: 'animal-service' },
-//   transports: [
-//     new transports.Console({ level: 'debug', stderrLevels: ['error'] }),
-//     new transports.File({
-//       filename: 'animal-service.log',
-//       level: 'info',
-//       maxsize: '5000000',
-//       tailable: 'true',
-//     }),
-//   ],
-// });
-
-// module.exports = logger;
+module.exports = logger;

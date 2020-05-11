@@ -11,7 +11,8 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run-script", "debug"],
       "port": 9229,
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "outputCapture": "std"
     },
     {
       "type": "node",
@@ -19,20 +20,6 @@
       "name": "Attach by Process ID",
       "processId": "${command:PickProcess}",
       "skipFiles": ["<node_internals>/**"]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Refresh DB",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/src/data/refreshDb.js",
-      "args": [
-        "dog",
-        "senior",
-        "adoptable",
-        "wa",
-        "1"
-      ]
     },
     {
       "type": "node",

@@ -1,29 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
 const cache = require('../../components/cache');
-const queryBuilder = require('../query-builder');
 
-function getDogs(db, logger) {
+function getDogs(dbContext, logger) {
   router.get('/dogs', async (req, res, next) => {
-    try {
-      const url = queryBuilder.buildAnimal(req.body);
+    const cacheKey = '/dogs';
 
-      const cacheData = await cache.get(url.href);
+    try {
+      const cacheData = await cache.get(cacheKey);
 
       if (cacheData) {
         res.send(cacheData);
         return;
       }
 
-      const response = await axios.get(url.href, req.body);
-
-      if (response) {
-        cache.set(url.href, response.data);
-        res.send(response.data);
-      }
+      dbContext.Animal.find({})
+        .populate('organization')
+        .exec((err, result) => {
+          if (err) {
+            res.send(err);
+          } else {
+            cache.set(cacheKey, result);
+            res.send(result);
+          }
+        });
     } catch (error) {
-      logger.error(`post exception: ${error} body: ${req.body}`);
+      logger.error(error);
       next(error);
     }
   });
