@@ -1,20 +1,15 @@
-//const assert = require('assert');
 const { assert, expect } = require('chai');
 const sinon = require('sinon');
 const axios = require('axios');
 const cache = require('../src/components/cache');
-//const refreshToken = require('../cache');
-const refreshToken = require('../src/middleware/auth');
-
-//
-//  should use cache.get
-//  should use axios.post
-//  should use axios.defaults.headers.common
-//  should return response.data
-//  should use next()
+const refreshToken = require('../src/middleware/auth2');
 
 describe('Auth Middleware', () => {
-  describe('request handler creation', () => {
+  beforeEach(() => {
+    cache.flush();
+  });
+
+  it('request handler creation', () => {
     it('should return a function', () => {
       assert.isFunction(refreshToken);
     });
@@ -24,7 +19,7 @@ describe('Auth Middleware', () => {
     });
   });
 
-  describe('request handler calling', () => {
+  it('request handler calling', () => {
     it('should return existing cache item and call next() once', async () => {
       cache.set('token', 'token_val');
 
@@ -37,7 +32,7 @@ describe('Auth Middleware', () => {
     });
   });
 
-  describe('request handler calling', () => {
+  it('request handler calling', () => {
     it('should return new cache item and call next() once', async () => {
       cache.set('token', 'token_val');
 
