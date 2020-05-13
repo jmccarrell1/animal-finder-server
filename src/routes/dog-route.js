@@ -24,8 +24,8 @@ module.exports = function (app) {
             logger.error(err);
             res.status(500).send('error during processing');
           } else {
-            cache.set(cacheKey, result);
-            res.json(result);
+            cache.set(cacheKey, { animals: result });
+            res.json({ animals: result });
           }
         });
     } catch (error) {
