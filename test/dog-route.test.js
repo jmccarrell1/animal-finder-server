@@ -12,18 +12,16 @@ describe('GET /dogs', async () => {
   let app;
 
   before(async () => {
-    await db.connect();
     app = express();
     route(app);
+    await db.connect();
   });
 
   beforeEach(async () => {
     cache.flush();
-    await db.connect();
   });
 
   after(async () => {
-    cache.flush();
     await db.closeDatabase();
   });
 
